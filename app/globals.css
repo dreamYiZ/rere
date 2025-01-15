@@ -1,6 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000; /* 修改为黑色 */
+  --foreground: #ffffff; /* 修改为白色 */
 }
 
 @media (prefers-color-scheme: dark) {
