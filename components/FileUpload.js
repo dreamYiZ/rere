@@ -1,19 +1,25 @@
-// components/FileUpload.js
 "use client";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Box, Typography } from "@mui/material";
 import VideoEditor from "./VideoEditor";
 import VideoPlayer from "./VideoPlayer";
+import Timeline from "./Timeline";
 
 const FileUpload = () => {
   const [videoSrc, setVideoSrc] = useState(null);
+  const [videoDuration, setVideoDuration] = useState(0);
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       if (file.type === "video/mp4") {
         const url = URL.createObjectURL(file);
-        setVideoSrc(url);
+        const video = document.createElement("video");
+        video.src = url;
+        video.onloadedmetadata = () => {
+          setVideoDuration(video.duration);
+          setVideoSrc(url);
+        };
       } else {
         alert("只支持 MP4 格式的视频文件！");
       }
@@ -31,6 +37,9 @@ const FileUpload = () => {
           </div>
           <div className="mb-24">
             <VideoPlayer src={videoSrc} />
+          </div>
+          <div className="mb-24">
+            <Timeline videoDuration={videoDuration} videoSrc={videoSrc} />
           </div>
         </>
       )}
