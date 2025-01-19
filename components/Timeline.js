@@ -1,7 +1,7 @@
 "use client";
 import Time from "./Time";
 import { useState, useEffect } from "react";
-import { generateUUID } from "./utils";
+import { generateUUID } from "@/util";
 
 const Timeline = ({ videoDuration, videoSrc }) => {
   const [timeArray, setTimeArray] = useState([]);
