@@ -29,8 +29,6 @@ const TimeLineCenter = ({ onMouseDown, left, width, fileName, duration }) => (
   >
     <div className="absolute inset-0 flex items-center justify-center text-black">
       {fileName} - {duration}
-
-      现在秒可能是小数，不需要是小数
     </div>
   </div>
 );
@@ -75,8 +73,7 @@ const Time = ({ mediaFile, timeItem }) => {
   const formatDuration = (seconds) => {
     const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
     const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
-    const s = (seconds % 60).toString().padStart(2, '0');
-    
+    const s = Math.floor(seconds % 60).toString().padStart(2, '0'); // Ensure whole number
     return `${h}:${m}:${s}`;
   };
 
