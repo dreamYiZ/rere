@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 import VideoEditor from "./VideoEditor";
 import VideoPlayer from "./VideoPlayer";
 import Timeline from "./Timeline";
-import {generateUUID} from "@/util";
+import { generateUUID } from "@/util";
 import useTimeStore from "@/store/useTimeStore"; // Update the import path as needed
 
 const FileUpload = () => {
@@ -28,6 +28,7 @@ const FileUpload = () => {
             endTime: video.duration,
             mediaFile: url,
             mediaType: "mp4",
+            fileName: file.name // Add file name here
           });
         };
       } else {
@@ -42,14 +43,9 @@ const FileUpload = () => {
     <div className="flex flex-col items-center">
       {videoSrc && (
         <>
-          <div className="mb-24">
-            <VideoEditor videoSrc={videoSrc} />
-          </div>
+         
           <div className="mb-24">
             <VideoPlayer src={videoSrc} />
-          </div>
-          <div className="mb-24">
-            <Timeline />
           </div>
         </>
       )}
