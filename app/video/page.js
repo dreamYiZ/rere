@@ -2,6 +2,7 @@
 import FileUpload from "@/components/FileUpload";
 import Timeline from "@/components/Timeline";
 import VideoEditor from "@/components/VideoEditor";
+import DebugPanel from "@/components/DebugPanel";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <VideoEditor />
       <Timeline />
       <FileUpload />
+      <DebugPanel />
     </div>
   );
 }

@@ -1,10 +1,8 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Box, Typography } from "@mui/material";
-import VideoEditor from "./VideoEditor";
 import VideoPlayer from "./VideoPlayer";
-import Timeline from "./Timeline";
 import { generateUUID } from "@/util";
 import useTimeStore from "@/store/useTimeStore"; // Update the import path as needed
 
@@ -13,6 +11,23 @@ const FileUpload = () => {
   const [videoDuration, setVideoDuration] = useState(0);
   const { add } = useTimeStore();
 
+  // useEffect(() => {
+    // const storedVideo = localStorage.getItem("videoData");
+    // if (storedVideo) {
+      // const { url, duration, name } = JSON.parse(storedVideo);
+      // setVideoSrc(url);
+      // setVideoDuration(duration);
+      // add({
+      //   id: generateUUID(),
+      //   startTime: 0,
+      //   endTime: duration,
+      //   mediaFile: url,
+      //   mediaType: "mp4",
+      //   fileName: name
+      // });
+    // }
+  // }, [add]);
+
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       if (file.type === "video/mp4") {
@@ -20,16 +35,24 @@ const FileUpload = () => {
         const video = document.createElement("video");
         video.src = url;
         video.onloadedmetadata = () => {
-          setVideoDuration(video.duration);
+          const duration = video.duration;
+          setVideoDuration(duration);
           setVideoSrc(url);
+
           add({
             id: generateUUID(),
             startTime: 0,
-            endTime: video.duration,
+            endTime: duration,
             mediaFile: url,
             mediaType: "mp4",
-            fileName: file.name // Add file name here
+            fileName: file.name
           });
+
+          // localStorage.setItem("videoData", JSON.stringify({
+          //   url,
+          //   duration,
+          //   name: file.name
+          // }));
         };
       } else {
         alert("只支持 MP4 格式的视频文件！");
@@ -43,7 +66,6 @@ const FileUpload = () => {
     <div className="flex flex-col items-center">
       {videoSrc && (
         <>
-         
           <div className="mb-24">
             <VideoPlayer src={videoSrc} />
           </div>

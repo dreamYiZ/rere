@@ -24,9 +24,7 @@ const Timeline = () => {
   return (
     <div className="w-full flex flex-col items-center min-h-[300px] p-8 m-8">
       <div className="w-full overflow-x-scroll">
-        <div className="relative">
-          {/* Time Scale */}
-          <div className="flex border-b border-gray-300 relative">
+      <div className="flex border-b border-gray-300 relative" style={{width:timeScale.length*40 }}>
             {timeScale.map((time, index) => (
               <div
                 key={time}
@@ -68,6 +66,9 @@ const Timeline = () => {
               </div>
             ))}
           </div>
+        <div className="relative">
+          {/* Time Scale */}
+         
           {/* Track Container */}
           <div className="border border-blue-500 min-h-[300px] relative">
             {timeArray.map((item, index) => (

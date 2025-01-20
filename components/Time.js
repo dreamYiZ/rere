@@ -27,7 +27,7 @@ const TimeLineCenter = ({ onMouseDown, left, width, fileName, duration }) => (
     style={{ left: left + 16, width: width - 16 }}
     onMouseDown={onMouseDown}
   >
-    <div className="absolute inset-0 flex items-center justify-center text-black">
+    <div className="absolute inset-0 flex items-center flex-start text-black">
       {fileName} - {duration}
     </div>
   </div>
