@@ -1,4 +1,4 @@
-export * from "./timeStore";
+export * from "./useTimeStore";
 
 
 

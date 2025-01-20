@@ -1,9 +1,11 @@
-// components/VideoEditor.js
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 const VideoEditor = ({ videoSrc }) => {
   const mountRef = useRef(null);
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [volume, setVolume] = useState(1);
 
   useEffect(() => {
     if (!videoSrc) return;
@@ -16,7 +18,9 @@ const VideoEditor = ({ videoSrc }) => {
 
     const video = document.createElement("video");
     video.src = videoSrc;
-    video.play();
+    // video.play();
+    video.volume = volume;
+    videoRef.current = video;
 
     const texture = new THREE.VideoTexture(video);
     const geometry = new THREE.PlaneGeometry(4, 2.25);
@@ -37,11 +41,47 @@ const VideoEditor = ({ videoSrc }) => {
         if (mountRef.current) {
           mountRef.current.removeChild(renderer.domElement);
         }
-      }, 1600)
+      }, 1600);
     };
-  }, [videoSrc]);
+  }, [videoSrc, volume]);
 
-  return <div ref={mountRef} />;
+  const togglePlayPause = () => {
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    videoRef.current.volume = newVolume;
+    setVolume(newVolume);
+  };
+
+  return (
+    <div>
+      <div ref={mountRef} />
+      <div className="controls">
+        <button onClick={togglePlayPause}>
+          {isPlaying ? "Pause" : "Play"}
+        </button>
+        <label>
+          Volume:
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+          />
+        </label>
+      </div>
+    </div>
+  );
 };
 
 export default VideoEditor;

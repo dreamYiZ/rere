@@ -1,25 +1,10 @@
 "use client";
+import React from "react";
 import Time from "./Time";
-import { useState, useEffect } from "react";
-import { generateUUID } from "@/util";
+import useTimeStore from "@/store/useTimeStore"; // Update the import path as needed
 
-const Timeline = ({ videoDuration, videoSrc }) => {
-  const [timeArray, setTimeArray] = useState([]);
-
-  useEffect(() => {
-    if (videoDuration > 0) {
-      const newTimeArray = [
-        {
-          id: generateUUID(),
-          startTime: 0,
-          endTime: videoDuration,
-          mediaFile: videoSrc,
-          mediaType: "mp4",
-        },
-      ];
-      setTimeArray(newTimeArray);
-    }
-  }, [videoDuration, videoSrc]);
+const Timeline = () => {
+  const { timeArray } = useTimeStore();
 
   return (
     <div className="w-full flex items-center min-h-[300px] p-8 m-8">
